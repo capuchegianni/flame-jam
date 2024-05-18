@@ -61,9 +61,10 @@ void Game::catchInputGame(Input input)
             _velocity.x = -_moveSpeed;
             break;
         case DASH:
-            if (!_isDashing) {
+            if (!_isDashing && _dashCooldown <= 0) {
                 _isDashing = true;
                 _dashDistance = 0.0f;
+                _dashCooldown = _DASH_COOLDOWN_TIME;
             }
             break;
         case RELEASE_R:
@@ -123,12 +124,13 @@ void Game::updatePlayerPos(float deltaTime)
     else
         animateIdle();
 
-    if (_isDashing)
-        _velocity.x *= 1.2;
     sf::Vector2f oldPos = _sprites["player"].getPosition();
     _sprites["player"].move(_velocity * deltaTime);
     sf::Vector2f newPos = _sprites["player"].getPosition();
+    if (_dashCooldown > 0)
+        _dashCooldown -= deltaTime;
     if (_isDashing) {
+        _velocity.x *= 1.2;
         _dashDistance += std::abs(newPos.x - oldPos.x);
         if (_dashDistance >= 200.0f) {
             _isDashing = false;

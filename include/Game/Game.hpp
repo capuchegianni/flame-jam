@@ -66,6 +66,8 @@ class Game {
         bool _isInit = false;
         bool _isDashing = false;
         float _dashDistance = 0.0f;
+        float _dashCooldown = 0.0f;
+        const float _DASH_COOLDOWN_TIME = 2.0f;
 
     protected:
         sf::Event _event;
