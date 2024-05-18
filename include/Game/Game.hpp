@@ -11,6 +11,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Movements.hpp"
+#include "Player.hpp"
 
 class Game {
     public:

@@ -8,14 +8,13 @@
 #include <unordered_map>
 #include "../Enum/Input.hpp"
 
-#ifndef MOVEMENTS_HPP_
-#define MOVEMENTS_HPP_
+#pragma once
 
 class Movements : public Player{
     public:
         void playerJump();
-        void playerDash():
+        void playerDash();
         void playerMoveLeft();
-        void playerMoveRight():
-        void parseKeyboard(Input):
+        void playerMoveRight();
+        void parseKeyboard(Input);
 };

@@ -57,6 +57,9 @@ void Game::animateFire()
 
 void Game::run()
 {
+    sf::CircleShape circle(50);
+    Player player;
+
     setUpGraphics();
     while (_window.isOpen()) {
         while (_window.pollEvent(_event)) {
@@ -66,6 +69,9 @@ void Game::run()
         _window.clear();
         animateFire();
         drawAssets();
+        Movements::parseKeyboard(Input);
+        sf::CircleShape::setPosition(player.getPlayerPos().first, player.getPlayerPos().second);
+        _window.draw(circle);
         _window.display();
     }
 }

@@ -5,18 +5,18 @@
 ** Player.hpp
 */
 
-#ifndef PLAYER_HPP_
-#define PLAYER_HPP_
+#pragma once
 
 #include "Game.hpp"
 
-class Player : public Game{
+class Player : public Game {
     public:
+        std::pair<float, float> getPlayerPos() { return _pos; };
 
-    private:
+    protected:
+        std::pair<float, float> _pos = { 900.0, 500.0 };
         int _health = 1;
         std::string _username;
-        std::pair<float, float> _pos = { 0.0, 0.0};
         int _score = 0;
         bool _dash = true;
 };
