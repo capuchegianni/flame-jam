@@ -19,6 +19,8 @@ enum Input {
     HANGON,
     ENTER,
     CLOSE,
+    RELEASE_R,
+    RELEASE_L,
     NONE
 };
 

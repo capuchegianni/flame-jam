@@ -23,6 +23,18 @@ Input Game::catchInput()
                 return RIGHT;
             if (_event.key.code == sf::Keyboard::Enter)
                 return ENTER;
+            if (_event.key.code == sf::Keyboard::Space)
+                return JUMP;
+            if (_event.key.code == sf::Keyboard::P)
+                return DASH;
+        }
+        if (_event.type == sf::Event::KeyReleased) {
+            if (_event.key.code == sf::Keyboard::Space)
+                return NONE;
+            if (_event.key.code == sf::Keyboard::D)
+                return RELEASE_R;
+            if (_event.key.code == sf::Keyboard::Q)
+                return RELEASE_L;
         }
     }
     return NONE;
@@ -37,10 +49,10 @@ void Game::run()
         if (_gameStatus == MENU) {
             catchInputMenu(_input);
             drawMenu();
-        }
-        else if (_gameStatus == GAME)
+        } else if (_gameStatus == GAME) {
+            catchInputGame(_input);
             drawGame();
-        else if (_gameStatus == EXIT)
+        } else if (_gameStatus == EXIT)
             _window.close();
         _window.display();
     }

@@ -13,9 +13,8 @@
 
 class Movements : public Player {
     public:
-        void playerJump();
-        void playerDash();
-        void playerMoveLeft();
-        void playerMoveRight();
-        void parseKeyboard();
+        float playerJump();
+        float playerDash();
+        float playerMoveLeft();
+        float playerMoveRight();
 };
