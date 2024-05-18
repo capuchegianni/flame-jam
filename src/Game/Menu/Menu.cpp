@@ -70,13 +70,38 @@ void Game::catchInputMenu(Input input)
         case RIGHT:
             std::cout << "RIGHT" << std::endl;
             break;
+        case ENTER:
+            _gameStatus = GAME;
+            break;
         default:
             break;
     }
+}
+
+void Game::drawTitle()
+{
+    sf::Font font;
+    sf::Text text, text2;
+
+    font.loadFromFile("assets/fonts/JuicyFills.ttf");
+    text.setFont(font);
+    text.setString("ToufeuTouflam");
+    text.setCharacterSize(100);
+    text.setFillColor(sf::Color::Red);
+    text2.setFont(font);
+    text2.setString("ToufeuTouflam");
+    text2.setCharacterSize(100);
+    text2.setFillColor(sf::Color::Black);
+
+    text.setPosition(500, 100);
+    text2.setPosition(510, 90);
+    _window.draw(text2);
+    _window.draw(text);
 }
 
 void Game::drawMenu()
 {
     animateFire();
     drawAssetsMenu();
+    drawTitle();
 }

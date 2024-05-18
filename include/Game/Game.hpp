@@ -26,6 +26,7 @@ class Game {
         void drawAssetsMenu();
         void animateFire();
         void catchInputMenu(Input input);
+        void drawTitle();
 
         void drawGame();
         GameStatus catchEvents();

@@ -21,6 +21,8 @@ Input Game::catchInput()
                 return LEFT;
             if (_event.key.code == sf::Keyboard::D)
                 return RIGHT;
+            if (_event.key.code == sf::Keyboard::Enter)
+                return ENTER;
         }
     }
     return NONE;

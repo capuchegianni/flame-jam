@@ -12,10 +12,6 @@ GameStatus Game::catchEvents()
     while (_window.pollEvent(_event)) {
         if (_event.type == sf::Event::Closed)
             return EXIT;
-        if (_event.type == sf::Event::KeyPressed) {
-            if (_event.key.code == sf::Keyboard::Enter)
-                return GAME;
-        }
     }
     return _gameStatus;
 }
