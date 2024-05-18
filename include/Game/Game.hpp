@@ -54,11 +54,11 @@ class Game {
         Input _input;
         bool _isReset = false;
         sf::Vector2f _velocity = { 0, 0 };
-        float _gravity = 150.0f;
-        float _jumpSpeed = 125.0f;
+        float _gravity = 1300.0f;
+        float _jumpSpeed = 600.0f;
         sf::Clock _clock;
         bool _isJumping = false;
-        int _groundHigh = 400;
+        int _groundHigh = 600;
         int _moveSpeed = 200;
         int _currentFrame = 0;
         int _updatesSinceLastFrame = 0;
