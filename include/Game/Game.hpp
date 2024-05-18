@@ -28,6 +28,7 @@ class Game {
         void animateFire();
         void catchInputMenu(Input input);
         void drawTitle();
+        void blinkText();
 
         void drawGame();
         void catchInputGame(Input input);
@@ -48,6 +49,7 @@ class Game {
         std::map<std::string, sf::Sprite> _sprites;
         int _frameNbr = 0;
         sf::Clock _animationClock;
+        sf::Clock _blinkClock;
         GameStatus _gameStatus = MENU;
         Input _input;
         bool _isReset = false;

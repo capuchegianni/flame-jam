@@ -55,6 +55,29 @@ void Game::animateFire()
     }
 }
 
+void Game::blinkText()
+{
+    sf::Font font;
+    sf::Text text;
+
+    font.loadFromFile("assets/fonts/press.ttf");
+    text.setFont(font);
+    text.setString("Press Enter to start");
+    text.setCharacterSize(50);
+    text.setFillColor(sf::Color::White);
+    text.setPosition(600, 500);
+
+    float time = _blinkClock.getElapsedTime().asSeconds();
+    if (time < 0.5f)
+        text.setFillColor(sf::Color::Transparent);
+    else {
+        text.setFillColor(sf::Color::Black);
+        if (time > 1.0f)
+            _blinkClock.restart();
+    }
+    _window.draw(text);
+}
+
 void Game::catchInputMenu(Input input)
 {
     switch (input) {
@@ -103,5 +126,6 @@ void Game::drawMenu()
 {
     animateFire();
     drawAssetsMenu();
+    blinkText();
     drawTitle();
 }
