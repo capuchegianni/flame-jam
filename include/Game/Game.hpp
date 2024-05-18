@@ -24,11 +24,13 @@ class Game {
 
     private:
         sf::RenderWindow _window;
-        sf::Event _event;
         std::map<std::string, sf::Texture> _textures;
         std::map<std::string, sf::Sprite> _sprites;
         int _frameNbr = 0;
         sf::Clock _animationClock;
+
+    protected:
+        sf::Event _event;
 };
 
 #endif /* !GAME_HPP_ */
