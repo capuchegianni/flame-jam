@@ -38,6 +38,9 @@ class Game {
         void updateWindow();
 
         void updatePlayerPos(float deltaTime);
+        void animateJump(float deltaTime);
+        void animateRun();
+        void animateIdle();
 
     private:
         sf::RenderWindow _window;
@@ -53,8 +56,12 @@ class Game {
         float _jumpSpeed = 125.0f;
         sf::Clock _clock;
         bool _isJumping = false;
-        int _groundHigh = 0;
-        int _moveSpeed = 100;
+        int _groundHigh = 400;
+        int _moveSpeed = 200;
+        int _currentFrame = 0;
+        int _updatesSinceLastFrame = 0;
+        bool _isMovingRight = false;
+        bool _isInit = false;
 
     protected:
         sf::Event _event;

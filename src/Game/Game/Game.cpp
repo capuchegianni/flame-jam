@@ -23,7 +23,12 @@ void Game::loadAssetsGame(std::string path, std::string name)
 
 void Game::setUpGraphicsGame()
 {
-    loadAssetsGame("assets/Menu/menuButton.png", "player");
+    loadAssetsGame("assets/Game/charSpriteSheet.png", "player");
+    if (_isInit == false) {
+        _isInit = true;
+        _sprites["player"].setPosition(100, _groundHigh);
+        _sprites["player"].setScale(1.5, 1.5);
+    }
 }
 
 void Game::updateWindow()
@@ -38,12 +43,21 @@ void Game::catchInputGame(Input input)
             if (_velocity.y == 0) {
                 _velocity.y = -_jumpSpeed;
                 _isJumping = true;
+                _currentFrame = 0;
             }
             break;
         case RIGHT:
+            if (!_isMovingRight) {
+                _isMovingRight = true;
+                _currentFrame = 0;
+            }
             _velocity.x = _moveSpeed;
             break;
         case LEFT:
+            if (_isMovingRight) {
+                _isMovingRight = false;
+                _currentFrame = 0;
+            }
             _velocity.x = -_moveSpeed;
             break;
         case DASH:
@@ -59,16 +73,57 @@ void Game::catchInputGame(Input input)
     }
 }
 
+void Game::animateJump(float deltaTime)
+{
+    _velocity.y += _gravity * deltaTime;
+    int frameWidth = 832 / 13;
+    int frameHeight = 2944 / 46;
+    int row = _isMovingRight ? 29 : 27;
+    _sprites["player"].setTextureRect(sf::IntRect(_currentFrame * frameWidth, row * frameHeight, frameWidth, frameHeight));
+    _updatesSinceLastFrame++;
+    if (_updatesSinceLastFrame >= 5) {
+        if (_currentFrame < 4)
+            _currentFrame++;
+        _updatesSinceLastFrame = 0;
+    }
+}
+
+void Game::animateRun()
+{
+    int frameWidth = 832 / 13;
+    int frameHeight = 2944 / 46;
+    int row = _isMovingRight ? 37 : 35;
+    _sprites["player"].setTextureRect(sf::IntRect(_currentFrame * frameWidth, row * frameHeight, frameWidth, frameHeight));
+    _updatesSinceLastFrame++;
+    if (_updatesSinceLastFrame >= 5) {
+        if (_currentFrame < 7)
+            _currentFrame++;
+        _updatesSinceLastFrame = 0;
+    }
+}
+
+void Game::animateIdle()
+{
+    int frameWidth = 832 / 13;
+    int frameHeight = 2944 / 46;
+    int row = 6;
+    _sprites["player"].setTextureRect(sf::IntRect(0 * frameWidth, row * frameHeight, frameWidth, frameHeight));
+}
+
 void Game::updatePlayerPos(float deltaTime)
 {
-    if (_isJumping) {
-        _velocity.y += _gravity * deltaTime;
-    }
+    if (_isJumping)
+        animateJump(deltaTime);
+    else if (_velocity.x != 0)
+        animateRun();
+    else
+        animateIdle();
     _sprites["player"].move(_velocity * deltaTime);
     if (_sprites["player"].getPosition().y >= _groundHigh) {
         _isJumping = false;
         _velocity.y = 0;
         _sprites["player"].setPosition(_sprites["player"].getPosition().x, _groundHigh);
+        _currentFrame = 0;
     }
 }
 
