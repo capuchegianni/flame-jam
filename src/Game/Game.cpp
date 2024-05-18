@@ -6,6 +6,8 @@
 */
 
 #include "../../include/Game/Game.hpp"
+#include "../../include/Game/Player.hpp"
+#include "../../include/Game/Movements.hpp"
 
 void Game::drawAssets()
 {
@@ -59,6 +61,7 @@ void Game::run()
 {
     sf::CircleShape circle(50);
     Player player;
+    Movements movements;
 
     setUpGraphics();
     while (_window.isOpen()) {
@@ -69,8 +72,9 @@ void Game::run()
         _window.clear();
         animateFire();
         drawAssets();
-        Movements::parseKeyboard(Input);
-        sf::CircleShape::setPosition(player.getPlayerPos().first, player.getPlayerPos().second);
+        movements.parseKeyboard();
+        circle.setPosition(player.getPlayerPos().first, player.getPlayerPos().second);
+        std::cout << player.getPlayerPos().first << " " << player.getPlayerPos().second << std::endl;
         _window.draw(circle);
         _window.display();
     }

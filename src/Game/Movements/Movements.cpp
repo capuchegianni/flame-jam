@@ -33,19 +33,24 @@ void Movements::playerDash()
     }
 }
 
-void Movements::parseKeyboard(Input)
+void Movements::parseKeyboard()
 {
+        std::cout << "KEY PRESSED" << std::endl;
     if (_event.type == sf::Event::KeyPressed) {
         if (_event.key.code == sf::Keyboard::Q) {
+            std::cout << "QQQQQQQQQQQ" << std::endl;
             playerMoveLeft();
         }
         if (_event.key.code == sf::Keyboard::D) {
+            std::cout << "DDDDDDDDDDD" << std::endl;
             playerMoveRight();
         }
         if (_event.key.code == sf::Keyboard::Space) {
+            std::cout << "           " << std::endl;
             playerJump();
         }
         if (_event.key.code == sf::Keyboard::P) {
+            std::cout << "PPPPPPPPPPP" << std::endl;
             playerDash();
         }
     }

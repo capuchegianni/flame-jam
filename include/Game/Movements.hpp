@@ -4,17 +4,18 @@
 ** File description:
 ** Movements.hpp
 */
-#include "Player.hpp"
-#include <unordered_map>
-#include "../Enum/Input.hpp"
 
 #pragma once
 
-class Movements : public Player{
+#include <unordered_map>
+#include "../Enum/Input.hpp"
+#include "Player.hpp"
+
+class Movements : public Player {
     public:
         void playerJump();
         void playerDash();
         void playerMoveLeft();
         void playerMoveRight();
-        void parseKeyboard(Input);
+        void parseKeyboard();
 };

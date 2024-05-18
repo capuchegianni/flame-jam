@@ -5,14 +5,12 @@
 ** Game
 */
 
-#ifndef GAME_HPP_
-#define GAME_HPP_
+#pragma once
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Movements.hpp"
-#include "Player.hpp"
+#include "../Enum/Input.hpp"
 
 class Game {
     public:
@@ -34,5 +32,3 @@ class Game {
     protected:
         sf::Event _event;
 };
-
-#endif /* !GAME_HPP_ */
