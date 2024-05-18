@@ -16,6 +16,7 @@ set(src
     src/Game/Menu/Menu.cpp
     src/Game/Game/Game.cpp
     src/Game/Input.cpp
+    src/Game/Movements/Movements.cpp
 )
 
 add_executable(toufeutouflam ${src})

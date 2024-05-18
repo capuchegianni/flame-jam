@@ -5,12 +5,13 @@
 ** Game
 */
 
-#ifndef GAME_HPP_
-#define GAME_HPP_
+#pragma once
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "../Enum/GameStatus.hpp"
+#include "../Enum/Input.hpp"
+#include <vector>
 #include "../Enum/Input.hpp"
 
 class Game {
@@ -33,13 +34,13 @@ class Game {
 
     private:
         sf::RenderWindow _window;
-        sf::Event _event;
         std::map<std::string, sf::Texture> _textures;
         std::map<std::string, sf::Sprite> _sprites;
         int _frameNbr = 0;
         sf::Clock _animationClock;
         GameStatus _gameStatus = MENU;
         Input _input;
-};
 
-#endif /* !GAME_HPP_ */
+    protected:
+        sf::Event _event;
+};
