@@ -30,8 +30,8 @@ void Game::run()
 {
     setUpGraphicsMenu();
     while (_window.isOpen()) {
-        _gameStatus = catchEvents();
         _input = catchInput();
+        _gameStatus = catchEvents();
         if (_gameStatus == MENU) {
             catchInputMenu(_input);
             drawMenu();
