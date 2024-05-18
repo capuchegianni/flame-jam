@@ -98,11 +98,10 @@ void Game::animateRun()
     int frameWidth = 832 / 13;
     int frameHeight = 2944 / 46;
     int row = _isMovingRight ? 37 : 35;
-    _sprites["player"].setTextureRect(sf::IntRect(_currentFrame * frameWidth, row * frameHeight, frameWidth, frameHeight));
+    _sprites["player"].setTextureRect(sf::IntRect((_currentFrame % 8) * frameWidth, row * frameHeight, frameWidth, frameHeight));
     _updatesSinceLastFrame++;
     if (_updatesSinceLastFrame >= 5) {
-        if (_currentFrame < 7)
-            _currentFrame++;
+        _currentFrame++;
         _updatesSinceLastFrame = 0;
     }
 }
@@ -141,7 +140,6 @@ void Game::updatePlayerPos(float deltaTime)
         _isJumping = false;
         _velocity.y = 0;
         _sprites["player"].setPosition(_sprites["player"].getPosition().x, _groundHigh);
-        _currentFrame = 0;
     }
 }
 
