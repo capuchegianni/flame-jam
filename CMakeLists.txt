@@ -13,6 +13,7 @@ include_directories(include)
 set(src
     src/main.cpp
     src/Game/Game.cpp
+    src/Game/Movements/Movements.cpp
 )
 
 add_executable(toufeutouflam ${src})
