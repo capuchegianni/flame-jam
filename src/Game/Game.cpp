@@ -19,6 +19,9 @@ void Game::loadAssets(std::string path, std::string name)
     _textures[name].loadFromFile(path);
     _sprites[name].setTexture(_textures[name]);
 
+    if (name == "background") {
+        _sprites[name].setScale(1.11, 1.052);
+    }
     if (name == "fireUpLeft") {
         _sprites[name].setTextureRect(sf::IntRect(0, 0, 1280 / 6, 425 / 2));
         _sprites[name].setPosition(0, 0);
@@ -32,6 +35,7 @@ void Game::loadAssets(std::string path, std::string name)
 void Game::setUpGraphics()
 {
     _window.create(sf::VideoMode(1920, 1080), "SFML window");
+    loadAssets("assets/Menu/background.jpg", "background");
     loadAssets("assets/Menu/fire.png", "fireUpLeft");
     loadAssets("assets/Menu/fire.png", "fireUpRight");
 }
