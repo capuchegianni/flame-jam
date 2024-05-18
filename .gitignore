@@ -1,0 +1,14 @@
+*.so
+*.o
+*.log
+*.cmake
+*.vscode
+*.pdf
+compile_commands.json
+CMakeFiles
+CMakeCache.txt
+toufeutouflam
+Makefile
+.cache
+*.vgcore
+tester.py
