@@ -13,6 +13,9 @@ include_directories(include)
 set(src
     src/main.cpp
     src/Game/Game.cpp
+    src/Game/Menu/Menu.cpp
+    src/Game/Game/Game.cpp
+    src/Game/Input.cpp
 )
 
 add_executable(toufeutouflam ${src})

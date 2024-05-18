@@ -10,16 +10,25 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "../Enum/GameStatus.hpp"
+#include "../Enum/Input.hpp"
 
 class Game {
     public:
         Game() = default;
         ~Game() = default;
         void run();
-        void setUpGraphics();
-        void loadAssets(std::string path, std::string name);
-        void drawAssets();
+        Input catchInput();
+
+        void drawMenu();
+        void setUpGraphicsMenu();
+        void loadAssetsMenu(std::string path, std::string name);
+        void drawAssetsMenu();
         void animateFire();
+        void catchInputMenu(Input input);
+
+        void drawGame();
+        GameStatus catchEvents();
 
     private:
         sf::RenderWindow _window;
@@ -28,6 +37,8 @@ class Game {
         std::map<std::string, sf::Sprite> _sprites;
         int _frameNbr = 0;
         sf::Clock _animationClock;
+        GameStatus _gameStatus = MENU;
+        Input _input;
 };
 
 #endif /* !GAME_HPP_ */

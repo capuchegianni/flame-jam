@@ -7,65 +7,39 @@
 
 #include "../../include/Game/Game.hpp"
 
-void Game::drawAssets()
+Input Game::catchInput()
 {
-    for (auto &sprite : _sprites) {
-        _window.draw(sprite.second);
+    while (_window.pollEvent(_event)) {
+        if (_event.type == sf::Event::Closed)
+            _window.close();
+        if (_event.type == sf::Event::KeyPressed) {
+            if (_event.key.code == sf::Keyboard::Z)
+                return UP;
+            if (_event.key.code == sf::Keyboard::S)
+                return DOWN;
+            if (_event.key.code == sf::Keyboard::Q)
+                return LEFT;
+            if (_event.key.code == sf::Keyboard::D)
+                return RIGHT;
+        }
     }
-}
-
-void Game::loadAssets(std::string path, std::string name)
-{
-    _textures[name].loadFromFile(path);
-    _sprites[name].setTexture(_textures[name]);
-
-    if (name == "background") {
-        _sprites[name].setScale(1.11, 1.052);
-    }
-    if (name == "fireUpLeft") {
-        _sprites[name].setTextureRect(sf::IntRect(0, 0, 1280 / 6, 425 / 2));
-        _sprites[name].setPosition(0, 0);
-    }
-    if (name == "fireUpRight") {
-        _sprites[name].setTextureRect(sf::IntRect(0, 0, 1280 / 6, 425 / 2));
-        _sprites[name].setPosition(1700, 0);
-    }
-}
-
-void Game::setUpGraphics()
-{
-    _window.create(sf::VideoMode(1920, 1080), "SFML window");
-    loadAssets("assets/Menu/background.jpg", "background");
-    loadAssets("assets/Menu/fire.png", "fireUpLeft");
-    loadAssets("assets/Menu/fire.png", "fireUpRight");
-}
-
-void Game::animateFire()
-{
-    if (_animationClock.getElapsedTime().asSeconds() > 1.f / 12.f) {
-        _frameNbr++;
-        _frameNbr %= 12;
-
-        int row = _frameNbr / 6;
-        int col = _frameNbr % 6;
-
-        _sprites["fireUpLeft"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
-        _sprites["fireUpRight"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
-        _animationClock.restart();
-    }
+    return NONE;
 }
 
 void Game::run()
 {
-    setUpGraphics();
+    setUpGraphicsMenu();
     while (_window.isOpen()) {
-        while (_window.pollEvent(_event)) {
-            if (_event.type == sf::Event::Closed)
-                _window.close();
+        _gameStatus = catchEvents();
+        _input = catchInput();
+        if (_gameStatus == MENU) {
+            catchInputMenu(_input);
+            drawMenu();
         }
-        _window.clear();
-        animateFire();
-        drawAssets();
+        else if (_gameStatus == GAME)
+            drawGame();
+        else if (_gameStatus == EXIT)
+            _window.close();
         _window.display();
     }
 }
