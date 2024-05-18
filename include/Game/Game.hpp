@@ -64,6 +64,8 @@ class Game {
         int _updatesSinceLastFrame = 0;
         bool _isMovingRight = false;
         bool _isInit = false;
+        bool _isDashing = false;
+        float _dashDistance = 0.0f;
 
     protected:
         sf::Event _event;
