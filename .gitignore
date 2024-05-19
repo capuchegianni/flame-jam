@@ -12,3 +12,4 @@ Makefile
 .cache
 *.vgcore
 tester.py
+vgcore.*

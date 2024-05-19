@@ -11,7 +11,9 @@
 void Game::drawAssetsGame()
 {
     for (auto &sprite : _sprites) {
-        _window.draw(sprite.second);
+        // if (sprite.first != "tuto_bg") {
+            _window.draw(sprite.second);
+        // }
     }
 }
 
@@ -23,6 +25,8 @@ void Game::loadAssetsGame(std::string path, std::string name)
 
 void Game::setUpGraphicsGame()
 {
+    // loadAssetsGame("assets/Game/download.jpg", "tuto_bg");
+    loadAssetsGame("assets/Game/tutoMap.png", "tuto");
     loadAssetsGame("assets/Game/tutoMap.png", "tuto");
     loadAssetsGame("assets/Game/charSpriteSheet.png", "player");
     loadAssetsGame("assets/Game/tutoMapHitbox.png", "collisionMap");
