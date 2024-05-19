@@ -23,11 +23,16 @@ void Game::loadAssetsGame(std::string path, std::string name)
 
 void Game::setUpGraphicsGame()
 {
+    loadAssetsGame("assets/Game/tutoMap.png", "tuto");
     loadAssetsGame("assets/Game/charSpriteSheet.png", "player");
+    loadAssetsGame("assets/Game/tutoMapHitbox.png", "collisionMap");
     if (_isInit == false) {
         _isInit = true;
         _sprites["player"].setPosition(100, _groundHigh);
-        _sprites["player"].setScale(1.5, 1.5);
+        _sprites["player"].setScale(1.8, 1.8);
+        _sprites["tuto"].setScale(2, 1.58);
+        _sprites["tuto"].setPosition(0, 0);
+        _sprites["collisionMap"].setScale(2, 1.58);
     }
 }
 
@@ -126,12 +131,21 @@ void Game::updatePlayerPos(float deltaTime)
     sf::Vector2f oldPos = _sprites["player"].getPosition();
     _sprites["player"].move(_velocity * deltaTime);
     sf::Vector2f newPos = _sprites["player"].getPosition();
+    sf::Vector2f scaledPos = sf::Vector2f((newPos.x + 80) / static_cast<float>(_sprites["collisionMap"].getScale().x), (newPos.y + _sprites["player"].getGlobalBounds().height) / static_cast<float>(_sprites["collisionMap"].getScale().y));
+    if (scaledPos.x >= 0 && scaledPos.x < _textures["collisionMap"].getSize().x && scaledPos.y >= 0 && scaledPos.y < _textures["collisionMap"].getSize().y) {
+        sf::Color pixel = _textures["collisionMap"].copyToImage().getPixel(scaledPos.x, scaledPos.y);
+        if (pixel.r == 255 && pixel.g == 0 && pixel.b == 0) {
+            _sprites["player"].setPosition(oldPos);
+            _velocity.y = 0;
+            _isJumping = false;
+        }
+    }
     if (_dashCooldown > 0)
         _dashCooldown -= deltaTime;
     if (_isDashing) {
         _velocity.x *= 1.2;
         _dashDistance += std::abs(newPos.x - oldPos.x);
-        if (_dashDistance >= 200.0f) {
+        if (_dashDistance >= 250.0f) {
             _isDashing = false;
             _velocity.x = _isMovingRight ? _moveSpeed : -_moveSpeed;
         }

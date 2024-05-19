@@ -55,10 +55,10 @@ class Game {
         bool _isReset = false;
         sf::Vector2f _velocity = { 0, 0 };
         float _gravity = 1300.0f;
-        float _jumpSpeed = 600.0f;
+        float _jumpSpeed = 800.0f;
         sf::Clock _clock;
         bool _isJumping = false;
-        int _groundHigh = 600;
+        int _groundHigh = 850;
         int _moveSpeed = 200;
         int _currentFrame = 0;
         int _updatesSinceLastFrame = 0;
@@ -68,6 +68,7 @@ class Game {
         float _dashDistance = 0.0f;
         float _dashCooldown = 0.0f;
         const float _DASH_COOLDOWN_TIME = 2.0f;
+        sf::Image collisionMap;
 
     protected:
         sf::Event _event;
