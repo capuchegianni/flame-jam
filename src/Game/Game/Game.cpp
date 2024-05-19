@@ -149,7 +149,7 @@ void Game::updatePlayerPos(float deltaTime)
     if (_isDashing) {
         _velocity.x *= 1.2;
         _dashDistance += std::abs(newPos.x - oldPos.x);
-        if (_dashDistance >= 250.0f) {
+        if (_dashDistance >= 300.0f) {
             _isDashing = false;
             _velocity.x = _isMovingRight ? _moveSpeed : -_moveSpeed;
         }
@@ -157,7 +157,7 @@ void Game::updatePlayerPos(float deltaTime)
     if (_sprites["player"].getPosition().y >= _groundHigh) {
         _isJumping = false;
         _velocity.y = 0;
-        _sprites["player"].setPosition(_sprites["player"].getPosition().x, _groundHigh);
+        _sprites["player"].setPosition(_sprites["player"].getPosition().x, _groundHigh + 10);
     }
 }
 
