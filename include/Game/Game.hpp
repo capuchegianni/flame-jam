@@ -42,6 +42,9 @@ class Game {
         void animateJump(float deltaTime);
         void animateRun();
         void animateIdle();
+        void animateFireBerry();
+        void displayScore();
+        void checkFireBerryCollision();
 
     private:
         sf::RenderWindow _window;
@@ -69,6 +72,7 @@ class Game {
         float _dashCooldown = 0.0f;
         const float _DASH_COOLDOWN_TIME = 2.0f;
         sf::Image collisionMap;
+        int _score = 0;
 
     protected:
         sf::Event _event;

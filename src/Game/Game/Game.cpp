@@ -11,9 +11,7 @@
 void Game::drawAssetsGame()
 {
     for (auto &sprite : _sprites) {
-        // if (sprite.first != "tuto_bg") {
-            _window.draw(sprite.second);
-        // }
+        _window.draw(sprite.second);
     }
 }
 
@@ -25,18 +23,68 @@ void Game::loadAssetsGame(std::string path, std::string name)
 
 void Game::setUpGraphicsGame()
 {
-    // loadAssetsGame("assets/Game/download.jpg", "tuto_bg");
-    loadAssetsGame("assets/Game/tutoMap.png", "tuto");
-    loadAssetsGame("assets/Game/tutoMap.png", "tuto");
     loadAssetsGame("assets/Game/charSpriteSheet.png", "player");
-    loadAssetsGame("assets/Game/tutoMapHitbox.png", "collisionMap");
     if (_isInit == false) {
         _isInit = true;
+        loadAssetsGame("assets/Game/tutoMap.png", "tuto");
+        loadAssetsGame("assets/Game/tutoMapHitbox.png", "collisionMap");
+        loadAssetsMenu("assets/Menu/fire.png", "fireBerry1");
+        loadAssetsMenu("assets/Menu/fire.png", "fireBerry2");
+        loadAssetsMenu("assets/Menu/fire.png", "fireBerry3");
+        loadAssetsMenu("assets/Menu/fire.png", "fireBerry4");
+        loadAssetsMenu("assets/Menu/fire.png", "fireBerry5");
+        loadAssetsMenu("assets/Menu/fire.png", "fireBerry6");
         _sprites["player"].setPosition(100, _groundHigh);
         _sprites["player"].setScale(1.8, 1.8);
         _sprites["tuto"].setScale(2, 1.58);
         _sprites["tuto"].setPosition(0, 0);
         _sprites["collisionMap"].setScale(2, 1.58);
+        _sprites["fireBerry1"].setPosition(500, 750);
+        _sprites["fireBerry1"].setScale(0.3, 0.3);
+        _sprites["fireBerry2"].setPosition(1100, 550);
+        _sprites["fireBerry2"].setScale(0.3, 0.3);
+        _sprites["fireBerry3"].setPosition(1200, 560);
+        _sprites["fireBerry3"].setScale(0.3, 0.3);
+        _sprites["fireBerry4"].setPosition(1300, 570);
+        _sprites["fireBerry4"].setScale(0.3, 0.3);
+        _sprites["fireBerry5"].setPosition(1400, 580);
+        _sprites["fireBerry5"].setScale(0.3, 0.3);
+        _sprites["fireBerry6"].setPosition(1500, 590);
+        _sprites["fireBerry6"].setScale(0.3, 0.3);
+    }
+}
+
+void Game::checkFireBerryCollision()
+{
+    sf::FloatRect playerBounds = _sprites["player"].getGlobalBounds();
+
+    std::vector<std::string> fireBerries = {"fireBerry1", "fireBerry2", "fireBerry3", "fireBerry4", "fireBerry5", "fireBerry6"};
+
+    for (const auto& fireBerry : fireBerries) {
+        if (_sprites.count(fireBerry) > 0 && playerBounds.intersects(_sprites[fireBerry].getGlobalBounds())) {
+            _sprites.erase(fireBerry);
+            _score += 100;
+            break;
+        }
+    }
+}
+
+void Game::animateFireBerry()
+{
+    if (_animationClock.getElapsedTime().asSeconds() > 1.f / 12.f) {
+        _frameNbr++;
+        _frameNbr %= 12;
+
+        int row = _frameNbr / 6;
+        int col = _frameNbr % 6;
+
+        _sprites["fireBerry1"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
+        _sprites["fireBerry2"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
+        _sprites["fireBerry3"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
+        _sprites["fireBerry4"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
+        _sprites["fireBerry5"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
+        _sprites["fireBerry6"].setTextureRect(sf::IntRect(col * 1240 / 6, row * 425 / 2, 1240 / 6, 410 / 2));
+        _animationClock.restart();
     }
 }
 
@@ -132,6 +180,7 @@ void Game::updatePlayerPos(float deltaTime)
     else
         animateIdle();
 
+    checkFireBerryCollision();
     sf::Vector2f oldPos = _sprites["player"].getPosition();
     _sprites["player"].move(_velocity * deltaTime);
     sf::Vector2f newPos = _sprites["player"].getPosition();
@@ -161,6 +210,20 @@ void Game::updatePlayerPos(float deltaTime)
     }
 }
 
+void Game::displayScore()
+{
+    sf::Font font;
+    sf::Text text;
+
+    font.loadFromFile("assets/fonts/press.ttf");
+    text.setFont(font);
+    text.setString("Score: " + std::to_string(_score));
+    text.setCharacterSize(50);
+    text.setFillColor(sf::Color::White);
+    text.setPosition(50, 0);
+    _window.draw(text);
+}
+
 void Game::drawGame()
 {
     _window.clear();
@@ -169,8 +232,10 @@ void Game::drawGame()
         _textures.clear();
         _isReset = true;
     }
+    animateFireBerry();
     setUpGraphicsGame();
     drawAssetsGame();
+    displayScore();
     float deltaTime = _clock.restart().asSeconds();
     updatePlayerPos(deltaTime);
 }
